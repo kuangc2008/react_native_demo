@@ -49,9 +49,9 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
             public void run() {
                 WritableMap params = Arguments.createMap();
                 params.putInt("gaga", 0);
-                mReactInstanceManager.getCurrentReactContext()
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onActivityCreate", params);
+//                mReactInstanceManager.getCurrentReactContext()
+//                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+//                        .emit("onActivityCreate", params);
             }
         });
     }
