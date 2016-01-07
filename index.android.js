@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var React = require('react-native');
+var {React, DeviceEventEmitter} = require('react-native');
 var Common = require('./CommonAndroid');
 
 var {
@@ -21,8 +21,14 @@ var HelloWorld = React.createClass({
 
 	componentDidMount: function() {
 
-		Common.getCookie(null);
-	
+		Common.getCookie("good job", (message) => {
+			console.log(message);
+		});
+		
+		
+		DeviceEventEmitter.addListener('onActivityCreate', function(gaga) {
+			console.log(gaga);
+		}
 		//this.printNetwork();
 		//this.getData();
 		

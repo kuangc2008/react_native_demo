@@ -1,5 +1,6 @@
 package com.helloworld;
 
+import android.os.Handler;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+import javax.security.auth.callback.Callback;
 
 /**
  * Created by kuangcheng01 on 2016/1/7.
@@ -35,7 +37,8 @@ public class CommonModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getCookie(String message) {
+    public void getCookie(String message, com.facebook.react.bridge.Callback callback) {
         Log.i("kcc", "getCookie");
+        callback.invoke("回到成功啦" + message);
     }
 }
