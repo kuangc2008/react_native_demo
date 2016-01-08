@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var {React, DeviceEventEmitter} = require('react-native');
+var React = require('react-native');
 var Common = require('./CommonAndroid');
 
 var {
@@ -20,22 +20,17 @@ var url = "http://api.comm.miui.com/cspmisc/patch/info?appkey=yellowpage&sign=6D
 var HelloWorld = React.createClass({
 
 	componentDidMount: function() {
-
 		Common.getCookie("good job", (message) => {
 			console.log(message);
 		});
-		
-		
-		DeviceEventEmitter.addListener('onActivityCreate', function(gaga) {
-			console.log(gaga);
-		}
+		// DeviceEventEmitter.addListener('onActivityCreate', function(gaga) {
+		// 	console.log(gaga);
+		// });
 		//this.printNetwork();
 		//this.getData();
-		
-		
 	},
-	
-	
+
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -51,7 +46,7 @@ var HelloWorld = React.createClass({
       </View>
     );
   },
-  	
+
 	getData : function() {
 
 		fetch(url)
@@ -74,13 +69,13 @@ var HelloWorld = React.createClass({
        NetInfo.fetch().done( (reach) => {
 		   console.log('Initial:' + reach);
 	   });
-	   
+
 	   NetInfo.isConnectionExpensive( (isConnectionExpensive) => {
 			console.log('connection is ' + (isConnectionExpensive ? '3g' : 'wifi'));
 	   });
     },
-  
-  
+
+
 });
 
 var styles = StyleSheet.create({

@@ -50,4 +50,8 @@ var styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
+module.exports = {
+  AlertExample,
+  SimpleAlertExampleBlock,
+}
+//AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
