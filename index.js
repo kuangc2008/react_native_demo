@@ -8,21 +8,53 @@ var {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
+  TouchableHighlight,
   TouchableOpacity,
   View,
   ViewPagerAndroid,
   AppRegistry,
 } = React;
 
-var PAGES = 5;
-var BGCOLOR = ['#fdc08e', '#fff6b9', '#99d1b7', "#dde5fe", "#f79273"];
-var IMAGE_URLS = [
-  'http://apod.nasa.gov/apod/image/1410/20141008tleBaldridge001h990.jpg',
-  'http://apod.nasa.gov/apod/image/1409/volcanicpillar_vetter_960.jpg',
-  'http://apod.nasa.gov/apod/image/1409/m27_snyder_960.jpg',
-  'http://apod.nasa.gov/apod/image/1409/PupAmulti_rot0.jpg',
-  'http://apod.nasa.gov/apod/image/1510/lunareclipse_27Sep_beletskycrop4.jpg',
-];
+
+var Button = React.createClass({
+  _handlePress : function() {
+    if(this.props.enabled && this.props.onPress) {
+      this.props.onPress();
+    }
+  },
+  render : function() {
+    return (
+      <TouchableWithoutFeedback onPress={this._handlePress}>
+        <View style={[styles.button, this.props.enabled ? [] : styles.buttonDisabled]}>
+          <Text style={styles.buttonText}>{this.props.text}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+})
+
+var NetworkDemo = React.createClass({
+  statics : {
+    title : '<ViewPagerAndroid>',
+    description : 'Container that allow to flip left and right',
+  },
+  getInitialState : function () {
+    return {
+    };
+  },
+
+  click : function() {
+    console.log("hehe")
+  },
+  render:function() {
+    return (
+      <Button text="发送请求" onPress={this.click} enabled ={true}>
+      </Button>
+    );
+  }
+});
+
+
 
 
 var styles = StyleSheet.create({
@@ -90,163 +122,7 @@ viewPager: {
 },
 });
 
-var LikeCount = React.createClass({
-  getInitialState: function() {
-    return {
-      likes : 7,
-    };
-  },
-  onClick: function() {
-    this.setState({likes : this.state.likes + 1});
-  },
-  render: function() {
-    var thumbsUp = '\uD83D\uDC4D';
-    return (
-      <View style={styles.likeContainer}>
-        <TouchableOpacity onPress={this.onClick} style={styles.likeButton}>
-          <Text style={styles.likesText}>
-            {thumbsUp + ' Like'}
-          </Text>
-        </TouchableOpacity>
-        <Text style = {styles.likesText}>
-          {this.state.likes + ' likes'}
-        </Text>
-      </View>
-    );
-  }
-});
 
-var Button = React.createClass({
-  _handlePress : function() {
-    if(this.props.enabled && this.props.onPress) {
-      this.props.onPress();
-    }
-  },
-  render : function() {
-    return (
-      <TouchableWithoutFeedback onPress={this._handlePress}>
-        <View style={[styles.button, this.props.enabled ? [] : styles.buttonDisabled]}>
-          <Text style={styles.buttonText}>{this.props.text}</Text>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-})
+//module.exports = NetworkDemo;
 
-var ProgressBar = React.createClass({
-  render: function() {
-    var fractionalPosition = (this.props.progress.position + this.props.progress.offset);
-    var progressBarSize = (fractionalPosition / (PAGES - 1)) * this.props.size;
-    return (
-      <View style = {[styles.progressBarContainer, {width : this.props.size}]}>
-        <View style={[styles.progressBar, {width: progressBarSize}]}/>
-      </View>
-    );
-  }
-});
-
-
-var ViewPagerAndroidExample = React.createClass({
-  statics : {
-    title : '<ViewPagerAndroid>',
-    description : 'Container that allow to flip left and right',
-  },
-  getInitialState : function () {
-    return {
-      page : 0,
-      animationsAreEnabled : true,
-      progress : {
-        position : 0,
-        offset : 0,
-      }
-    };
-  },
-  onPageSelected : function(e) {
-    this.setState( {page : e.nativeEvent.position});
-  },
-  onPageScroll : function(e) {
-    this.setState( {progress : e.nativeEvent});
-  },
-  move : function(delta) {
-    var page = this.state.page + delta;
-    this.go(page);
-  },
-
-  go :function(page) {
-    if (this.state.animationsAreEnabled) {
-      this.viewPager.setPage(page);
-    } else {
-      this.viewPager.setPageWithoutAnimation(page);
-    }
-    this.setState({page});
-  },
-
-  render:function() {
-    console.log("hehe");
-
-    var pages = [];
-    for( var i = 0; i<PAGES; i++) {
-      var pageStyle = {
-        backgroundColor : BGCOLOR[ i % BGCOLOR.length],
-        alignItems : 'center',
-        padding : 20,
-      };
-      pages.push(
-        <View key = {i} style = {pageStyle} collapsable={false}>
-          <Image
-            style = {styles.image}
-            source = {{uri : IMAGE_URLS[i%BGCOLOR.length]}}
-          />
-          <LikeCount />
-        </View>
-      );
-    }
-
-    var {page , animationsAreEnabled} = this.state;
-
-    return (
-      <View style = {styles.container} >
-        <ViewPagerAndroid
-          style={styles.viewPager}
-          initialPage={0}
-          onPageScroll={this.onPageScroll}
-          onPageSelected={this.onPageSelected}
-          ref={viewPager => {this.viewPager = viewPager;}}>
-          {pages}
-        </ViewPagerAndroid>
-
-        <View style = {styles.buttons} >
-          {
-            animationsAreEnabled ?
-            <Button
-              text="Turn off animation"
-              enabled={true}
-              onPress={ () => this.setState({animationsAreEnabled : false})}
-            /> :
-            <Button
-              text="Turn animation back on"
-              enabled={true}
-              onPress = { () => this.setState({animationsAreEnabled : true})}
-            />
-          }
-        </View>
-
-        <View style={styles.buttons}>
-          <Button text="Start" enabled={page>0} onPress={()=>this.go(0)} />
-          <Button text="Prev" enabled={page>0} onPress={()=>this.move(-1)} />
-          <Text style={styles.buttonText}>Page {page + 1} / {PAGES}</Text>
-          <ProgressBar size={100} progress={this.state.progress}/>
-          <Button text="Next" enabled={page < PAGES - 1} onPress={() => this.move(1)}/>
-          <Button text="Last" enabled={page < PAGES - 1} onPress={() => this.go(PAGES - 1)}/>
-        </View>
-
-      </View>
-    );
-  }
-});
-
-
-
-//module.exports = ViewPagerAndroidExample;
-
-AppRegistry.registerComponent('HelloWorld', () => ViewPagerAndroidExample);
+AppRegistry.registerComponent('HelloWorld', () => NetworkDemo);

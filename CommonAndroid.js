@@ -2,11 +2,11 @@
 
 var { NativeModules} = require('react-native');
 
-var a =  {
-	getCookie(str) {
-		console.log("fesesf");
-	}
-}
+// var a =  {
+// 	getCookie(str) {
+// 		console.log("fesesf");
+// 	}
+// }
 
 
 //module.exports = a;
