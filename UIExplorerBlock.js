@@ -3,6 +3,7 @@
 'user strict';
 
 var React = require('react-native');
+var Tdd= require('./ddd');
 var {
   StyleSheet,
   Text,
@@ -14,6 +15,10 @@ var UIExplorerBlock = React.createClass({
   //   title : React.propTypes.string,
   //   description : React.propTypes.string,
   // },
+
+  propTypes : {
+    title : React.propTypes.array,
+  },
 
   getInitialState : function() {
     return {description : (null: ?string)};
