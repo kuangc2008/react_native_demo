@@ -5,6 +5,7 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.helloworld.module.MyIntentModule2;
 import com.helloworld.module.MyToastModule;
 import com.helloworld.module.MyIntentModule;
 import com.helloworld.network.HttpModule;
@@ -24,6 +25,7 @@ public class KCReactPackage implements ReactPackage  {
         modules.add(new MyToastModule(reactContext));
         modules.add(new HttpModule(reactContext));
         modules.add(new MyIntentModule(reactContext));
+        modules.add(new MyIntentModule2(reactContext));
 
         return modules;
     }

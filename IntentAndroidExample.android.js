@@ -5,6 +5,7 @@
 var React = require('react-native');
 var MyIntentAndroid = require('./modules/MyIntent');
 var MyToastAndroid = require('./modules/MyToastAndroid');
+var MyIntent2 = require('./modules/MyIntent2')
 
 var {
   StyleSheet,
@@ -38,7 +39,6 @@ var OpenURLButton = React.createClass({
   }
 });
 
-
 var ToastModule = React.createClass({
   handleClick : function() {
     MyToastAndroid.show("hehe", MyToastAndroid.LONG, function(message) {
@@ -57,6 +57,53 @@ var ToastModule = React.createClass({
   },
 });
 
+var ShareModule = React.createClass({
+  handleClick : function() {
+    MyIntent2.canOpenOpen("android.intent.action.SEND",
+      "text/plain",
+      null,
+      {'android.intent.extra.TEXT' : 'This is my text to send.'},
+      (open) => {
+        if(open) {
+          MyIntent2.openOpen("android.intent.action.SEND",
+            "text/plain",
+            null,
+            {'android.intent.extra.TEXT' : 'This is my text to send.'} //this.state.extra
+          );
+        } else {
+          console.log("no");
+        }
+      }) ;
+  },
+  render: function() {
+    return (
+      <TouchableNativeFeedback
+      onPress = {this.handleClick}>
+      <View style = {styles.button}>
+        <Text style={styles.text}>分享文字</Text>
+      </View>
+      </TouchableNativeFeedback>
+    );
+  },
+});
+
+var saveImage = React.createClass({
+  // handleClick : function() {
+  //   fetch("http://gtms02.alicdn.com/tps/i2/TB1PyDCHpXXXXagXVXX3yLs_pXX-107-17.png")
+  //     .then((response) => )
+  // },
+  // render: function() {
+  //   return (
+  //     <TouchableNativeFeedback
+  //     onPress = {this.handleClick}>
+  //     <View style = {styles.button}>
+  //       <Text style={styles.text}>保存图片</Text>
+  //     </View>
+  //     </TouchableNativeFeedback>
+  //   );
+  // },
+});
+
 var IntentAndroidExample = React.createClass({
   statics : {
     title : 'IntentAndroid',
@@ -67,6 +114,7 @@ var IntentAndroidExample = React.createClass({
       <UIExplorerBlock title="open external URL">
         <OpenURLButton url={'https://www.facebook.com'} />
         <ToastModule />
+        <ShareModule />
       </UIExplorerBlock>
 
     );
