@@ -4,6 +4,7 @@
 
 var React = require('react-native');
 var MyIntentAndroid = require('./modules/MyIntent');
+var MyToastAndroid = require('./modules/MyToastAndroid');
 
 var {
   StyleSheet,
@@ -16,10 +17,6 @@ var {
 var UIExplorerBlock = require('./UIExplorerBlock');
 
 var OpenURLButton = React.createClass({
-  // propTypes : {
-  //   url : React.propTypes.string,
-  // },
-
   handleClick : function() {
     MyIntentAndroid.canOpenUrl(this.props.url, (supported) => {
       if (supported) {
@@ -41,6 +38,25 @@ var OpenURLButton = React.createClass({
   }
 });
 
+
+var ToastModule = React.createClass({
+  handleClick : function() {
+    MyToastAndroid.show("hehe", MyToastAndroid.LONG, function(message) {
+      console.log("my anme is " + MyToastAndroid.CUSTOM);
+    });
+  },
+  render: function() {
+    return (
+      <TouchableNativeFeedback
+      onPress = {this.handleClick}>
+      <View style = {styles.button}>
+        <Text style={styles.text}>点击显示toast</Text>
+      </View>
+      </TouchableNativeFeedback>
+    );
+  },
+});
+
 var IntentAndroidExample = React.createClass({
   statics : {
     title : 'IntentAndroid',
@@ -50,7 +66,9 @@ var IntentAndroidExample = React.createClass({
     return (
       <UIExplorerBlock title="open external URL">
         <OpenURLButton url={'https://www.facebook.com'} />
+        <ToastModule />
       </UIExplorerBlock>
+
     );
   }
 });
