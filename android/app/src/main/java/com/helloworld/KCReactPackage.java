@@ -6,6 +6,7 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.react.uimanager.ViewManager;
+import com.helloworld.module.MyIntentModule;
 import com.helloworld.network.HttpModule;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class KCReactPackage implements ReactPackage  {
 
         modules.add(new CommonModule(reactContext));
         modules.add(new HttpModule(reactContext));
+        modules.add(new MyIntentModule(reactContext));
 
         return modules;
     }

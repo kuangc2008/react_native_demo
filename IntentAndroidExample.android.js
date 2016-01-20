@@ -3,8 +3,9 @@
 'use strict';
 
 var React = require('react-native');
+var MyIntentAndroid = require('./modules/MyIntent');
+
 var {
-  IntentAndroid,
   StyleSheet,
   Text,
   TouchableNativeFeedback,
@@ -20,9 +21,9 @@ var OpenURLButton = React.createClass({
   // },
 
   handleClick : function() {
-    IntentAndroid.canOpenURL(this.props.url, (supported) => {
+    MyIntentAndroid.canOpenUrl(this.props.url, (supported) => {
       if (supported) {
-        IntentAndroid.openURL(this.props.url);
+        MyIntentAndroid.openURL(this.props.url);
       } else {
         console.log("can not oepn");
       }
@@ -73,5 +74,5 @@ var styles = StyleSheet.create({
 });
 
 
- module.exports = IntentAndroidExample;
-//AppRegistry.registerComponent('HelloWorld', () => IntentAndroidExample);
+ //module.exports = IntentAndroidExample;
+AppRegistry.registerComponent('HelloWorld', () => IntentAndroidExample);
