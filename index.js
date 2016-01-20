@@ -3,6 +3,7 @@
 'use strict';
 
 var React = require('react-native');
+var MyHttp = require('./MyHttpRequest');
 var {
   Image,
   StyleSheet,
@@ -44,7 +45,33 @@ var NetworkDemo = React.createClass({
   },
 
   click : function() {
-    console.log("hehe")
+    console.log("hehe");
+    // var requestId = RCTNetworking.sendRequest(
+    //   "GET",
+    //   "http://www.baidu.com",
+    //   [],
+    //   {},
+    //   false
+    // );
+    // console.log("requestid ->" + requestId);
+
+
+    var xhr = new MyHttp();
+    xhr.onload = function() {
+      var status = (xhr.status === 1223) ? 204 : xhr.status
+      if (status < 100 || status > 599) {
+          console.log('Network request failed222');
+        return
+      }
+      var body = 'response' in xhr ? xhr.response : xhr.responseText;
+      console.log('body' + body);
+    }
+
+    xhr.onerror = function() {
+      console.log('Network request failed');
+    }
+
+    xhr.open('GET', 'http://www.baidu.com', true)
   },
   render:function() {
     return (

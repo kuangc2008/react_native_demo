@@ -108,7 +108,7 @@ public class HttpModule extends ReactContextBaseJavaModule {
         }
 
         Headers requestHeaders = extractHeaders(headers, data);
-        if (requestBuilder == null) {
+        if (requestHeaders == null) {
             onRequestError(requestId, "Unrecognized headers format");
             return;
         }
@@ -301,7 +301,7 @@ public class HttpModule extends ReactContextBaseJavaModule {
         args.pushInt(response.code());
         args.pushMap(headers);
 
-        getEventEmitter().emit("didCompleteNetworkResponse", args);
+        getEventEmitter().emit("didReceiveNetworkResponse", args);
     }
 
     private void onDataReceived(int requestId, String data) {
@@ -309,7 +309,7 @@ public class HttpModule extends ReactContextBaseJavaModule {
         args.pushInt(requestId);
         args.pushString(data);
 
-        getEventEmitter().emit("didCompleteNetworkResponse", args);
+        getEventEmitter().emit("didReceiveNetworkData", args);
     }
 
     private static WritableMap translateHeaders(Headers headers) {
