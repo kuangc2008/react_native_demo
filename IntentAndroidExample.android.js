@@ -14,6 +14,7 @@ var {
   Text,
   TouchableNativeFeedback,
   View,
+  Image,
   AppRegistry,
 } = React;
 
@@ -96,14 +97,22 @@ var ToastModule = React.createClass({
     // xhr.send(null);
 
 
-    
+
   },
+
     render: function() {
+        //     source={require('./image/load_execute.png')}
+
+        //     style={styles.base}
+        //    source={{uri : 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/copy_rignt_24.png'}}
       return (
         <TouchableNativeFeedback
         onPress = {this.handleClick}>
         <View style = {styles.button}>
           <Text style={styles.text}>联网</Text>
+          <Image
+            source={require('sdcard/file1/123.jpg')}
+           />
         </View>
         </TouchableNativeFeedback>
       );
@@ -158,6 +167,10 @@ var IntentAndroidExample = React.createClass({
 
 
 var styles = StyleSheet.create({
+  base: {
+    width: 38,
+    height: 38,
+  },
   container : {
     flex : 1,
     backgroundColor : 'white',
