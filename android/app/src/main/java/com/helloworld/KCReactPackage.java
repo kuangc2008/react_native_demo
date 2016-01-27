@@ -9,8 +9,10 @@ import com.helloworld.module.MyIntentModule2;
 import com.helloworld.module.MyToastModule;
 import com.helloworld.module.MyIntentModule;
 import com.helloworld.network.HttpModule;
+import com.helloworld.ui.MyTextViewManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,6 +39,8 @@ public class KCReactPackage implements ReactPackage  {
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return new ArrayList<>(0);
+        return Arrays.<ViewManager>asList(
+                new MyTextViewManager()
+        );
     }
 }
