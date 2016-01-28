@@ -7,6 +7,7 @@ var MyIntentAndroid = require('./modules/MyIntent');
 var MyToastAndroid = require('./modules/MyToastAndroid');
 var MyIntent2 = require('./modules/MyIntent2');
 var AsyncFileStorage = require('./modules/FileStorageModule');
+var AsyncSpStorage = require('./modules/SpStorageModule');
 
 //var FormData = require('form-data');
 // var MyTextViewGG = require('./js/MyImage');
@@ -206,13 +207,11 @@ var FileSaveData = React.createClass({
       name: 'kc.js',
       content : '我们是社会主义接班人'
     }, function(result) {
-      console.log(AsyncFileStorage.KEY_NAME);
       console.log(result);
     })
   },
   getData : function() {
     AsyncFileStorage.getFileData('kc.js', function(result) {
-      console.log(AsyncFileStorage.KEY_NAME);
       console.log(result);
     })
   },
@@ -236,6 +235,39 @@ var FileSaveData = React.createClass({
   }
 });
 
+var SpSaveData = React.createClass({
+  saveData : function() {
+    AsyncSpStorage.setString('life_data', 'shenghuojia');
+    AsyncSpStorage.setInt('life_item', 5);
+  },
+  getData : function() {
+    AsyncSpStorage.getString('life_data', '', function(result) {
+      console.log(result);
+    });
+    AsyncSpStorage.getInt('life_item', 0, function(result) {
+      console.log(result);
+    })
+  },
+  render : function() {
+    return (
+      <View style={{flexDirection : 'row'}}>
+        <TouchableNativeFeedback
+        onPress = {this.saveData}>
+        <View style = {styles.button}>
+          <Text style={styles.text}>save content to sp</Text>
+        </View>
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+        onPress = {this.getData}>
+        <View style = {styles.button}>
+          <Text style={styles.text}>get sp from file</Text>
+        </View>
+        </TouchableNativeFeedback>
+      </View>
+    );
+  }
+});
+
 var IntentAndroidExample = React.createClass({
   statics : {
     title : 'IntentAndroid',
@@ -249,6 +281,7 @@ var IntentAndroidExample = React.createClass({
         <ShareModule />
         <SaveData />
         <FileSaveData />
+        <SpSaveData />
       </UIExplorerBlock>
     );
   }

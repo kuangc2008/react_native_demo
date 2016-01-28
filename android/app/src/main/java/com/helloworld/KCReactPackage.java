@@ -9,6 +9,7 @@ import com.helloworld.module.FileStorageModule;
 import com.helloworld.module.MyIntentModule2;
 import com.helloworld.module.MyToastModule;
 import com.helloworld.module.MyIntentModule;
+import com.helloworld.module.SPStorageModule;
 import com.helloworld.network.HttpModule;
 import com.helloworld.ui.MyTextViewManager;
 
@@ -30,6 +31,7 @@ public class KCReactPackage implements ReactPackage  {
         modules.add(new MyIntentModule(reactContext));
         modules.add(new MyIntentModule2(reactContext));
         modules.add(new FileStorageModule(reactContext));
+        modules.add(new SPStorageModule(reactContext));
 
         return modules;
     }
