@@ -16,6 +16,7 @@ var {
   View,
   Image,
   AppRegistry,
+  AsyncStorage,
 } = React;
 
 var UIExplorerBlock = require('./UIExplorerBlock');
@@ -110,9 +111,6 @@ var ToastModule = React.createClass({
         onPress = {this.handleClick}>
         <View style = {styles.button}>
           <Text style={styles.text}>联网</Text>
-          <Image
-            source={require('sdcard/file1/123.jpg')}
-           />
         </View>
         </TouchableNativeFeedback>
       );
@@ -149,6 +147,54 @@ var ShareModule = React.createClass({
   },
 });
 
+
+var SaveData = React.createClass({
+  saveData : function() {
+    var dataSet = [];
+    var data1 = ['life_data', 'baidu'];
+    var data2 = ['life_item', 'number 1'];
+    dataSet.push(data1);
+    dataSet.push(data2);
+    AsyncStorage.multiSet(dataSet, (error) => {
+      if (error == null) {
+        console.log('save success');
+      } else {
+        console.log(params);
+      }
+    });
+  },
+  getData : function() {
+    var keys = ['life_data', 'life_item']
+    AsyncStorage.multiGet(keys, function(error, result) {
+      if (error == null) {
+        console.log('get success');
+        console.log(result);
+      } else {
+        console.log(error);
+      }
+    }
+    );
+  },
+  render : function() {
+    return (
+      <View style={{flexDirection : 'row'}}>
+        <TouchableNativeFeedback
+        onPress = {this.saveData}>
+        <View style = {styles.button}>
+          <Text style={styles.text}>保存文字</Text>
+        </View>
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+        onPress = {this.getData}>
+        <View style = {styles.button}>
+          <Text style={styles.text}>存取文字</Text>
+        </View>
+        </TouchableNativeFeedback>
+      </View>
+    );
+  }
+});
+
 var IntentAndroidExample = React.createClass({
   statics : {
     title : 'IntentAndroid',
@@ -160,6 +206,7 @@ var IntentAndroidExample = React.createClass({
         <OpenURLButton url={'https://www.facebook.com'} />
         <ToastModule />
         <ShareModule />
+        <SaveData />
       </UIExplorerBlock>
     );
   }
