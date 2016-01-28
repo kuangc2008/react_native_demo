@@ -6,6 +6,8 @@ var React = require('react-native');
 var MyIntentAndroid = require('./modules/MyIntent');
 var MyToastAndroid = require('./modules/MyToastAndroid');
 var MyIntent2 = require('./modules/MyIntent2');
+var AsyncFileStorage = require('./modules/FileStorageModule');
+
 //var FormData = require('form-data');
 // var MyTextViewGG = require('./js/MyImage');
 
@@ -195,6 +197,45 @@ var SaveData = React.createClass({
   }
 });
 
+
+var FileSaveData = React.createClass({
+  //var name = AsyncFileStorage.KEY_NAME;
+  //var content = AsyncFileStorage.KEY_CONTENT;
+  saveData : function() {
+    AsyncFileStorage.saveFile({
+      name: 'kc.js',
+      content : '我们是社会主义接班人'
+    }, function(result) {
+      console.log(AsyncFileStorage.KEY_NAME);
+      console.log(result);
+    })
+  },
+  getData : function() {
+    AsyncFileStorage.getFileData('kc.js', function(result) {
+      console.log(AsyncFileStorage.KEY_NAME);
+      console.log(result);
+    })
+  },
+  render : function() {
+    return (
+      <View style={{flexDirection : 'row'}}>
+        <TouchableNativeFeedback
+        onPress = {this.saveData}>
+        <View style = {styles.button}>
+          <Text style={styles.text}>save content to file</Text>
+        </View>
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+        onPress = {this.getData}>
+        <View style = {styles.button}>
+          <Text style={styles.text}>get content from file</Text>
+        </View>
+        </TouchableNativeFeedback>
+      </View>
+    );
+  }
+});
+
 var IntentAndroidExample = React.createClass({
   statics : {
     title : 'IntentAndroid',
@@ -207,6 +248,7 @@ var IntentAndroidExample = React.createClass({
         <ToastModule />
         <ShareModule />
         <SaveData />
+        <FileSaveData />
       </UIExplorerBlock>
     );
   }
